@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Accordion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-4 md:p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Frequently Asked Questions</h1>
+        
+        <div class="space-y-4">
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <input type="checkbox" id="faq1" class="peer hidden" />
+                <label for="faq1" class="flex justify-between items-center p-4 cursor-pointer">
+                    <h2 class="text-lg font-semibold text-gray-700">What is your return policy?</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300 peer-checked:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </label>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 peer-checked:max-h-96">
+                    <div class="p-4 pt-0 text-gray-600">
+                        <p>Our return policy allows you to return items within 30 days of purchase. Items must be in their original condition with tags attached. Please contact our customer service for a return authorization.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <input type="checkbox" id="faq2" class="peer hidden" />
+                <label for="faq2" class="flex justify-between items-center p-4 cursor-pointer">
+                    <h2 class="text-lg font-semibold text-gray-700">How long does shipping take?</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300 peer-checked:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </label>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 peer-checked:max-h-96">
+                    <div class="p-4 pt-0 text-gray-600">
+                        <p>Standard shipping typically takes 3-5 business days within the continental US. For international orders, delivery times vary between 7-14 business days depending on the destination.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <input type="checkbox" id="faq3" class="peer hidden" />
+                <label for="faq3" class="flex justify-between items-center p-4 cursor-pointer">
+                    <h2 class="text-lg font-semibold text-gray-700">Do you offer international shipping?</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300 peer-checked:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </label>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 peer-checked:max-h-96">
+                    <div class="p-4 pt-0 text-gray-600">
+                        <p>Yes, we ship to most countries worldwide. Additional customs fees and import duties may apply depending on your country's regulations. These charges are the responsibility of the recipient.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <input type="checkbox" id="faq4" class="peer hidden" />
+                <label for="faq4" class="flex justify-between items-center p-4 cursor-pointer">
+                    <h2 class="text-lg font-semibold text-gray-700">How can I track my order?</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300 peer-checked:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </label>
+                <div class="max-h-0 overflow-hidden transition-all duration-300 peer-checked:max-h-96">
+                    <div class="p-4 pt-0 text-gray-600">
+                        <p>Once your order has shipped, you'll receive a confirmation email with a tracking number. You can use this number on our website's tracking page or the carrier's website to monitor your package's progress.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
