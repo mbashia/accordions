@@ -1,0 +1,332 @@
+
+	<html lang="en" class="light">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	
+	</head>
+	<body>
+	  
+		<div class="modal" id="users-modal" show>
+			<div class="component">
+			  <!-- Dummy component data -->
+			  <div class="user-form">
+				<input type="hidden" id="user-id" value="123">
+				<div class="form-fields">
+				  <div class="field">
+					<label>Name</label>
+					<input type="text" value="John Doe">
+				  </div>
+				  <div class="field">
+					<label>Email</label>
+					<input type="email" value="john@example.com">
+				  </div>
+				  <!-- More form fields as needed -->
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <main
+			id="main"
+			x-data="{auditTrailModal:false, singleTrailModal:false,}"
+			class="flex-1 max-h-[100vh] bg-white min-h-screen"
+		  >
+			<div class="px-4 sm:px-6 lg:px-6 py-[30px] mx-auto flex flex-col gap-6">
+			  <div class="flex-col justify-start items-start gap-2 flex">
+				<h1 class="text-2xl font-semibold">Audit logs</h1>
+			  </div>
+		  
+			  <div x-data="{ currentTab: 'timeline' }" class="flex flex-col gap-6">
+				<!-- mobile Tabs -->
+				<div class="sm:hidden">
+				  <label for="tabs" class="sr-only">Select a tab</label>
+				  <select
+					id="tabs"
+					name="tabs"
+					x-model="currentTab"
+					class="block w-full rounded-md border-[#EAECF0] py-2 pl-3 pr-10 text-base focus:border-hr-maroon focus:outline-none focus:ring-hr-maroon sm:text-sm"
+				  >
+					<option value="timeline">Timeline</option>
+					<option value="users">Users</option>
+				  </select>
+				</div>
+				<!-- desktop Tabs -->
+				<div class="hidden sm:block bg-[#FAFBFC] p-1 rounded-full border border-[#EAECF0]">
+				  <div>
+					<nav class="-mb-px flex items-center gap-2" aria-label="Tabs" x-cloak>
+					  <a
+						href="#timeline"
+						class="whitespace-nowrap font-semibold text-sm h-10 flex items-center gap-2 py-2 px-3 bg-transparent text-[#475467] hover:text-gray-700 hover:border-[#EAECF0] hover:cursor-pointer"
+						aria-current="page"
+					  >
+						Timeline
+					  </a>
+					  <a
+						href="#users"
+						class="whitespace-nowrap font-semibold text-sm h-10 flex items-center gap-2 py-2 px-3 bg-transparent text-[#475467] hover:text-gray-700 hover:border-[#EAECF0] hover:cursor-pointer"
+						aria-current="page"
+					  >
+						Users
+					  </a>
+					</nav>
+				  </div>
+				</div>
+				<!-- timeline -->
+				<section x-cloak x-show="currentTab === 'timeline'">
+				  <div class="space-y-6">
+					<div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:w-full">
+					  <!-- Search  -->
+					  <div class="w-full">
+						<div class="relative w-full">
+						  <input
+							type="search"
+							name="search"
+							id="search"
+							class="search"
+							placeholder="Search"
+						  />
+						  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+							<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+							  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667" d="m17.5 17.5-2.917-2.917m2.084-5a7.083 7.083 0 1 1-14.167 0 7.083 7.083 0 0 1 14.167 0Z"/>
+							</svg>
+						  </div>
+						</div>
+					  </div>
+		  
+					  <div class="px-4 py-2 card-bg flex flex-col sm:flex-row gap-3 sm:items-center justify-start">
+						<label class="text-sm font-medium leading-tight whitespace-nowrap">
+						  Filter by
+						</label>
+						<div class="flex gap-2 items-center">
+						  <!-- Date Range -->
+						  <div x-data="{filterOpen: false}" x-on:click.away="filterOpen = false" class="relative">
+							<button
+							  x-on:click="filterOpen = !filterOpen"
+							  class="flex gap-2 w-full !text-center !items-center py-2 px-3 justify-between !font-normal text-gray-500 text-sm bg-white hover:bg-gray-50 rounded-lg border border-[#EAECF0] focus:border-upg-600 focus:outline-none focus:ring-1 hover:no-underline overflow-hidden text-ellipsis"
+							>
+							  <span> Date Range</span>
+							  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M9 1L5 5L1 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							  </svg>
+							</button>
+							<!-- filter content -->
+							<div
+							  x-cloak
+							  x-show="filterOpen"
+							  x-on:keydown.escape.window="filterOpen = false"
+							  x-transition:enter="transition duration-200 ease-out"
+							  x-transition:enter-start="translate-y-1 opacity-0"
+							  x-transition:enter-end="translate-y-0 opacity-100"
+							  x-transition:leave="transition ease-in duration-150"
+							  x-transition:leave-start="translate-y-0 opacity-100"
+							  x-transition:leave-end="translate-y-1 opacity-0"
+							  class="absolute z-20 right-0 sm:left-auto left-0 sm:right-0 mt-3"
+							  style="min-width: calc(280px + 2rem)"
+							>
+							  <div class="date-filter">
+								<input type="date" id="start-date">
+								<span>to</span>
+								<input type="date" id="end-date">
+								<button class="apply-btn">Apply</button>
+							  </div>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+		  
+					<div class="card !p-0 overflow-hidden">
+					  <div class="sm:flex items-start gap-0 justify-between">
+						<div class="sm:w-72 sm:border-r border-[#EAECF0]">
+						  <ol role="list" class="overflow-auto min-h-[600px] max-h-[600px]">
+							<!-- Sample log entry 1 -->
+							<li class="relative flex cursor-pointer bg-gradient-blue">
+							  <div class="absolute left-7 top-6 -ml-px mt-0.5 h-full w-0.5 bg-blue-500"></div>
+							  <div class="group relative flex items-start w-full px-2 py-6">
+								<span class="flex items-center">
+								  <span class="relative z-10 flex h-4 w-10 items-center justify-center rounded-full text-slate-200">
+									<div class="rounded-full bg-[#EAECF0] overflow-hidden border-2 border-upg-500">
+									  <img class="w-6 h-6" src="https://via.placeholder.com/24x24" alt="User Avatar"/>
+									</div>
+								  </span>
+								</span>
+								<div class="flex flex-col gap-2">
+								  <div class="flex justify-start items-start gap-1">
+									<div class="text-blue-500 text-xs font-medium">
+									  John Doe
+									</div>
+									<div class="flex-grow text-slate-600 text-xs font-semibold">
+									  Created User
+									</div>
+								  </div>
+								  <div class="text-xs leading-tight">
+									15 Jan, 2024 at 10:34AM
+								  </div>
+								</div>
+							  </div>
+							</li>
+							
+							<!-- Sample log entry 2 -->
+							<li class="relative flex cursor-pointer">
+							  <div class="absolute left-7 top-6 -ml-px mt-0.5 h-full w-0.5 bg-[#EAECF0]"></div>
+							  <div class="group relative flex items-start w-full px-2 py-6">
+								<span class="flex items-center">
+								  <span class="relative z-10 flex h-4 w-10 items-center justify-center rounded-full text-slate-200">
+									<div class="rounded-full bg-[#EAECF0] overflow-hidden border-2 border-[##EAECF0]">
+									  <div class="initials w-6 h-6">JD</div>
+									</div>
+								  </span>
+								</span>
+								<div class="flex flex-col gap-2">
+								  <div class="flex justify-start items-start gap-1">
+									<div class="text-blue-500 text-xs font-medium">
+									  Jane Smith
+									</div>
+									<div class="flex-grow text-slate-600 text-xs font-semibold">
+									  Modified Settings
+									</div>
+								  </div>
+								  <div class="text-xs leading-tight">
+									14 Jan, 2024 at 2:15PM
+								  </div>
+								</div>
+							  </div>
+							</li>
+						  </ol>
+						</div>
+						<div class="flex-1 py-6">
+						  <div class="px-4">
+							<h6 class="font-medium capitalize">
+							  Log details
+							</h6>
+		  
+							<div class="flex flex-col gap-4 font-normal text-sm pb-4">
+							  <div class="flex justify-between">
+								<p class="text-[#475467]">
+								  Public ID
+								</p>
+								<p class="text-[#000007] text-right capitalize">
+								  LOG-12345
+								</p>
+							  </div>
+							  <div class="flex justify-between">
+								<p class="text-[#475467]">Event</p>
+								<p class="text-[#000007] text-right capitalize">
+								  Created
+								</p>
+							  </div>
+							  <div class="flex justify-between">
+								<p class="text-[#475467]">Entity</p>
+								<p class="text-[#000007] text-right capitalize">
+								  User
+								</p>
+							  </div>
+							  <div class="flex justify-between">
+								<p class="text-[#475467]">When</p>
+								<p class="text-[#000007] text-right capitalize">
+								  15 Jan, 2024 at 10:34AM
+								</p>
+							  </div>
+							  <div class="flex justify-between">
+								<div class="text-[#475467]">
+								  What changed
+								</div>
+								<div class="text-[#000007] text-right capitalize">
+								  <p class="gap-4"><span>name:</span> <span>"John Doe"</span></p>
+								  <p class="gap-4"><span>email:</span> <span>"john@example.com"</span></p>
+								</div>
+							  </div>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</section>
+				<!-- Users -->
+				<section x-cloak x-show="currentTab === 'users'">
+				  <div class="card !p-6 flex flex-col gap-6">
+					<div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:w-full">
+					  <!-- Search  -->
+					  <div class="w-full">
+						<div class="relative w-full text-[#000007] placeholder:text-[#000007]">
+						  <input
+							type="search"
+							name="search"
+							id="search"
+							class="search"
+							placeholder="Search"
+						  />
+						  <div class="pointer-events-none absolute text-black inset-y-0 left-0 mb-[2px] flex items-center pl-2">
+							<svg
+							  class="w-4 h-4"
+							  xmlns="http://www.w3.org/2000/svg"
+							  fill="none"
+							  viewBox="0 0 20 20"
+							>
+							  <path
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="1.667"
+								d="m17.5 17.5-2.917-2.917m2.084-5a7.083 7.083 0 1 1-14.167 0 7.083 7.083 0 0 1 14.167 0Z"
+							  />
+							</svg>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<!-- table -->
+					<div class="flex flex-col gap-4">
+					  <div class="card !p-0 rounded-xl overflow-hidden">
+						<div class="flex flex-col">
+						  <div class="overflow-x-auto">
+							<div class="inline-block min-w-full align-middle">
+							  <div class="overflow-x-auto ring-0">
+								<table id="users-logs" class="upg-table">
+								  <thead>
+									<tr>
+									  <th>Date Created</th>
+									  <th>Name</th>
+									  <th>ID</th>
+									  <th>Role</th>
+									  <th>Actions</th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+									  <td>15 Jan, 2024 at 10:34AM</td>
+									  <td>John Doe</td>
+									  <td>ID-12345</td>
+									  <td>Admin</td>
+									  <td>
+										<button class="view-btn">View</button>
+									  </td>
+									</tr>
+									<tr>
+									  <td>14 Jan, 2024 at 2:15PM</td>
+									  <td>Jane Smith</td>
+									  <td>ID-67890</td>
+									  <td>Editor</td>
+									  <td>
+										<button class="view-btn">View</button>
+									  </td>
+									</tr>
+								  </tbody>
+								</table>
+							  </div>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</section>
+			  </div>
+			</div>
+		  </main>
+	</body>
+	</html>
